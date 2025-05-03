@@ -37,6 +37,18 @@ func InitToolsets(passedToolsets []string, readOnly bool, getClient GetClientFn,
 			toolsets.NewServerTool(CreateBranch(getClient, t)),
 			toolsets.NewServerTool(PushFiles(getClient, t)),
 		)
+	projects := toolsets.NewToolset("projects", "GitHub Projects (v2) related tools").
+		AddReadTools(
+			toolsets.NewServerTool(ListProjects(getClient, t)),
+			toolsets.NewServerTool(GetProject(getClient, t)),
+			toolsets.NewServerTool(GetProjectItems(getClient, t)),
+			toolsets.NewServerTool(GetContentId(getClient, t)),
+		).
+		AddWriteTools(
+			toolsets.NewServerTool(CreateProject(getClient, t)),
+			toolsets.NewServerTool(AddProjectItem(getClient, t)),
+			toolsets.NewServerTool(UpdateProjectField(getClient, t)),
+		)
 	issues := toolsets.NewToolset("issues", "GitHub Issues related tools").
 		AddReadTools(
 			toolsets.NewServerTool(GetIssue(getClient, t)),
@@ -88,6 +100,7 @@ func InitToolsets(passedToolsets []string, readOnly bool, getClient GetClientFn,
 	tsg.AddToolset(issues)
 	tsg.AddToolset(users)
 	tsg.AddToolset(pullRequests)
+	tsg.AddToolset(projects)
 	tsg.AddToolset(codeSecurity)
 	tsg.AddToolset(secretProtection)
 	tsg.AddToolset(experiments)

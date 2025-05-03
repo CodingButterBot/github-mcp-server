@@ -151,6 +151,7 @@ The following sets of tools are available (all are on by default):
 | `issues`                | Issue-related tools (create, read, update, comment)           |
 | `users`                 | Anything relating to GitHub Users                             |
 | `pull_requests`         | Pull request operations (create, merge, review)               |
+| `projects`              | GitHub Projects V2 operations (create, manage, get items)     |
 | `code_security`         | Code scanning alerts and security features                    |
 | `experiments`           | Experimental features (not considered stable)                 |
 
@@ -552,6 +553,48 @@ export GITHUB_MCP_TOOL_ADD_ISSUE_COMMENT_DESCRIPTION="an alternative description
   - `state`: Alert state (string, optional)
   - `secret_type`: The secret types to be filtered for in a comma-separated list (string, optional)
   - `resolution`: The resolution status (string, optional)
+
+### Projects (v2)
+
+- **list_projects** - List projects (v2) for an organization or user
+  - `owner`: Organization or user login name (string, required)
+  - `type`: Type of owner (organization, user) (string, required)
+  - `page`: Page number (number, optional)
+  - `perPage`: Results per page (number, optional)
+
+- **get_project** - Get details of a GitHub project (v2)
+  - `owner`: Organization or user login name (string, required)
+  - `type`: Type of owner (organization, user) (string, required)
+  - `number`: The project number (number, required)
+
+- **create_project** - Create a new GitHub project (v2)
+  - `owner`: Organization or user login name (string, required)
+  - `type`: Type of owner (organization, user) (string, required)
+  - `title`: Project title (string, required)
+  - `description`: Project description (string, required)
+
+- **add_project_item** - Add an issue or pull request to a GitHub project (v2)
+  - `project_id`: The project node ID (not number) (string, required)
+  - `content_id`: The node ID of the issue or pull request (string, required)
+
+- **get_project_items** - Get items in a GitHub project (v2)
+  - `project_id`: The project node ID (not number) (string, required)
+  - `page`: Page number (number, optional)
+  - `perPage`: Results per page (number, optional)
+
+- **get_content_id** - Get the node ID of an issue or pull request for use with Projects API
+  - `owner`: Repository owner (string, required)
+  - `repo`: Repository name (string, required)
+  - `number`: Issue or pull request number (number, required)
+  - `type`: Content type (issue or pull_request) (string, required)
+
+- **update_project_field** - Update a field value for a project item
+  - `project_id`: The project node ID (not number) (string, required)
+  - `item_id`: The project item node ID (string, required)
+  - `field_id`: The project field node ID (string, required)
+  - `field_type`: The type of field (text, date, number, single_select) (string, required)
+  - `value`: The value to set for the field (string, required)
+  - `option_id`: The option ID for single_select fields (string, optional)
 
 ## Resources
 
